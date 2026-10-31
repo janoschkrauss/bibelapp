@@ -14,12 +14,48 @@
   h2 { font-size: 1.2rem; margin-top: 2rem; }
   p.unter, footer { color: var(--leise); }
   a { color: var(--link); }
+  figure.video { margin: 1rem 0 0; }
+  .video-rahmen { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden;
+                  background: #000; box-shadow: 0 1px 4px rgba(0, 0, 0, .12); }
+  .video-rahmen iframe, .video-start, .video-start img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video-start { display: block; cursor: pointer; }
+  .video-start img { object-fit: cover; }
+  .video-start .abspielen { position: absolute; left: 50%; top: 50%; width: 76px; height: 76px; border-radius: 50%;
+                            transform: translate(-50%, -50%); background: rgba(0, 0, 0, .7); transition: background .15s; }
+  .video-start .abspielen::after { content: ""; position: absolute; left: 31px; top: 23px;
+                                   border-style: solid; border-width: 15px 0 15px 24px; border-color: transparent transparent transparent #fff; }
+  .video-start:hover .abspielen, .video-start:focus-visible .abspielen { background: var(--link); }
+  figure.video figcaption { color: var(--leise); font-size: .9rem; margin-top: .6rem; }
 </style>
 </head>
 <body>
 <main>
 <h1>Bibelapp</h1>
 <p class="unter">Die Bibel auf Deutsch und im Urtext lesen und dabei Hebräisch und Griechisch lernen.</p>
+
+<h2>Erklärvideo</h2>
+<p>In gut vier Minuten zeigt das Video, wie du mit der App liest, Wörter nachschlägst, lernst und Notizen schreibst.</p>
+<figure class="video">
+  <div class="video-rahmen" id="erklaervideo">
+    <a class="video-start" href="https://www.youtube.com/watch?v=1TXxSXSjBkw" aria-label="Erklärvideo abspielen (lädt das Video von YouTube)">
+      <img src="erklaervideo-vorschau.jpg" alt="" width="1280" height="720">
+      <span class="abspielen" aria-hidden="true"></span>
+    </a>
+  </div>
+  <figcaption>Das Video liegt bei YouTube. Die Seite lädt es erst, wenn du auf Abspielen tippst. Dabei erhält Google unter anderem deine IP-Adresse, mehr dazu unter <a href="datenschutz.html#erklaervideo">Datenschutz</a>. Du kannst es auch direkt <a href="https://youtu.be/1TXxSXSjBkw">auf YouTube ansehen</a>.</figcaption>
+</figure>
+<script>
+  document.querySelector('.video-start').addEventListener('click', function (ereignis) {
+    ereignis.preventDefault();
+    var player = document.createElement('iframe');
+    player.src = 'https://www.youtube-nocookie.com/embed/1TXxSXSjBkw?autoplay=1&rel=0&hl=de';
+    player.title = 'Erklärvideo zur Bibelapp';
+    player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    player.allowFullscreen = true;
+    player.referrerPolicy = 'strict-origin-when-cross-origin';
+    document.getElementById('erklaervideo').replaceChildren(player);
+  });
+</script>
 
 <h2>Kontakt</h2>
 <p>Fragen, Fehler oder Wünsche? Schreib mir an <a href="mailto:info@timelinelogger.com">info@timelinelogger.com</a>. Hilfreich sind dein Gerät (iPhone oder iPad), die Version der App (Einstellungen › Über die App) und bei Fehlern die Bibelstelle oder ein Bildschirmfoto.</p>
